@@ -10,8 +10,10 @@ public class PlayerController : MonoBehaviour
     public string weapon;
     public bool battle = false;
     private bool grounded = true, facingForward = true;
+    public int player;
+    public bool firstPlayer = false, secondPlayer = false;
 
-    public GameObject hammer, axe, spear, hammer2, axe2, spear2, groundCheck, otherPlayer, battleSystem;
+    public GameObject hammer, axe, spear, hammerThrow, axeThrow, spearThrow, player1, player2;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (battle)
+        if (battle && player == 1)
         {
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
             {
@@ -45,27 +47,27 @@ public class PlayerController : MonoBehaviour
             {
                 xDir = 0;
             }
-
-            /*if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                weapon = "Hammer";
-                axe.SetActive(false);
-                spear.SetActive(false);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                weapon = "Axe";
-                hammer.SetActive(false);
-                spear.SetActive(false);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                weapon = "Spear";
-                hammer.SetActive(false);
-                axe.SetActive(false);
-            } */
         }
-        else
+        else if (battle && player == 2)
+        {
+            if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
+            {
+                xDir = 0;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                xDir = -1;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                xDir = 1;
+            }
+            else
+            {
+                xDir = 0;
+            }
+        }
+        else if (!battle && player == 1)
         {
             xDir = 0;
 
@@ -82,12 +84,29 @@ public class PlayerController : MonoBehaviour
                 weapon = "Spear";
             }
         }
+        else if (!battle && player == 2)
+        {
+            xDir = 0;
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                weapon = "Hammer";
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                weapon = "Axe";
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                weapon = "Spear";
+            }
+        }
     }
 
     void FixedUpdate()
     {
 
-        if(battle)
+        if(battle && player == 1)
         {
 
             Move();
@@ -98,6 +117,21 @@ public class PlayerController : MonoBehaviour
             }
 
             if (Input.GetKeyDown(KeyCode.S))
+            {
+                Attack();
+            }
+        }
+        else if (battle && player == 2)
+        {
+
+            Move();
+
+            if (Input.GetKeyDown(KeyCode.UpArrow) && grounded)
+            {
+                Jump();
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 Attack();
             }
@@ -159,7 +193,7 @@ public class PlayerController : MonoBehaviour
                     axe.SetActive(false);
                     break;
                 }
-            case "Hammer2":
+            case "HammerThrow":
                 {
                     if (ammo > 0)
                     {
@@ -167,7 +201,7 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 }
-            case "Axe2":
+            case "AxeThrow":
                 {
                     if (ammo > 0)
                     {
@@ -175,7 +209,7 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 }
-            case "Spear2":
+            case "SpearThrow":
                 {
                     if (ammo > 0)
                     {
@@ -198,25 +232,29 @@ public class PlayerController : MonoBehaviour
         if (invincibility <= 0.0f)
         {
             currentHP -= damageTaken;
-            invincibility = 50.0f;
+            invincibility = 5.0f;
             if (currentHP <= 0.0f)
             {
-                Debug.Log("Player 2 Wins");
+                Debug.Log("Player " + player + " Loses");
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player2" && collision.isTrigger == false) //- ignores any colliders marked player and any colliders that are Triggers
-        {
-            collision.GetComponent<Player2Controller>().TakeDamage(damage);
-        }
+            if((collision.gameObject.tag == "Weapon1") && (!firstPlayer))
+            {
+                player1.GetComponent<PlayerController>().TakeDamage(damage);
+            }
+            else if((collision.gameObject.tag == "Weapon2") && (!secondPlayer))
+            {
+                player2.GetComponent<PlayerController>().TakeDamage(damage);
+            }
     }
 
     private void OnTriggerStay2D(Collider2D collision) // needs a trigger to work 
     {
-        if (collision.gameObject.tag != "Player1" && collision.isTrigger == false) //- ignores any colliders marked player and any colliders that are Triggers
+        if (collision.gameObject.tag != "Player" + player.ToString() && collision.isTrigger == false) //- ignores any colliders marked player and any colliders that are Triggers
         {
             grounded = true; //if a collider NOT marked player is detected, it marks the player as being on the ground (or a surface)
         }
@@ -224,7 +262,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != "Player1" && collision.isTrigger == false)
+        if (collision.gameObject.tag != "Player" + player.ToString() && collision.isTrigger == false)
         {
             grounded = false;
         }
