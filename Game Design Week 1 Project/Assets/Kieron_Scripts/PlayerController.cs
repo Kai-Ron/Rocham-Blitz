@@ -6,14 +6,15 @@ public class PlayerController : MonoBehaviour
 {
     public float maxHP = 30.0f, damage = 1.0f, speed = 3.0f, jumpForce = 3.0f, cooldown = 1.0f, invincibility = 0.0f;
     private float currentHP, timeLeft, xDir;
-    private int ammo = 3;
+    private int ammo;
     public string weapon;
     public bool battle = false;
     private bool grounded = true, facingForward = true;
     public int player;
     public bool firstPlayer = false, secondPlayer = false;
 
-    public GameObject hammer, axe, spear, hammerThrow, axeThrow, spearThrow, player1, player2;
+
+    public GameObject hammer, axe, spear, player1, player2;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -141,6 +142,20 @@ public class PlayerController : MonoBehaviour
         {
             invincibility -= 0.01f;
         }
+        else if(invincibility == 1.0f)
+        {
+            Debug.Log("Player " + player + " is no longer invincible");
+        }
+    }
+
+    private IEnumerator invincible()
+    {
+        animator.SetTrigger("Damaged");
+
+        yield return new WaitForSeconds(invincibility);
+
+        Debug.Log("Player " + player + " is no longer invincible");
+
     }
 
     public void Select()
@@ -193,30 +208,6 @@ public class PlayerController : MonoBehaviour
                     axe.SetActive(false);
                     break;
                 }
-            case "HammerThrow":
-                {
-                    if (ammo > 0)
-                    {
-                        ammo--;
-                    }
-                    break;
-                }
-            case "AxeThrow":
-                {
-                    if (ammo > 0)
-                    {
-                        ammo--;
-                    }
-                    break;
-                }
-            case "SpearThrow":
-                {
-                    if (ammo > 0)
-                    {
-                        ammo--;
-                    }
-                    break;
-                }
             default:
                 {
                     hammer.SetActive(false);
@@ -232,10 +223,16 @@ public class PlayerController : MonoBehaviour
         if (invincibility <= 0.0f)
         {
             currentHP -= damageTaken;
-            invincibility = 5.0f;
             if (currentHP <= 0.0f)
             {
+                // animator.SetTrigger("Dead");
                 Debug.Log("Player " + player + " Loses");
+            }
+            else
+            {
+                invincibility = 1.0f;
+                StartCoroutine(invincible());
+                Debug.Log("Player " + player + " Takes Damage");
             }
         }
     }
@@ -244,11 +241,11 @@ public class PlayerController : MonoBehaviour
     {
             if((collision.gameObject.tag == "Weapon1") && (!firstPlayer))
             {
-                player1.GetComponent<PlayerController>().TakeDamage(damage);
+                player2.GetComponent<PlayerController>().TakeDamage(damage);
             }
             else if((collision.gameObject.tag == "Weapon2") && (!secondPlayer))
             {
-                player2.GetComponent<PlayerController>().TakeDamage(damage);
+                player1.GetComponent<PlayerController>().TakeDamage(damage);
             }
     }
 
