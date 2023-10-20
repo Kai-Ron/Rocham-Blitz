@@ -11,7 +11,7 @@ public class rpsSelectP1 : MonoBehaviour
     //Assumes WASD movement and F to attack for Player One
     //The acronym RPS stands for "Rock, Paper, Scissors", and refers to the selection portion of the game which is styled after it.
 
-    public bool selectPhase = true; //True when RPS selection phase is active
+    public bool battle = false; //True when RPS selection phase is active
 
     int playerOneSelect = 0;
 
@@ -27,7 +27,7 @@ public class rpsSelectP1 : MonoBehaviour
     void Update()
     {
 
-        if (selectPhase) //Detects whether players are in selection phase, in combat, or something else i.e. 
+        if (!battle) //Detects whether players are in selection phase, in combat, or something else i.e. 
         {
 
             //Start of selection code
@@ -83,13 +83,13 @@ public class rpsSelectP1 : MonoBehaviour
         if (phase)
         {
 
-            selectPhase = true;
+            battle = false;
 
         }
         else
         {
 
-            selectPhase = false;
+            battle = true;
 
         }
 
