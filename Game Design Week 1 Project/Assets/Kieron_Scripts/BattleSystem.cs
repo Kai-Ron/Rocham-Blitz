@@ -6,8 +6,7 @@ using TMPro;
 public class BattleSystem : MonoBehaviour
 {
     public GameObject player1, player2;
-    private PlayerController controller1;
-    private Player2Controller controller2;
+    private PlayerController controller1, controller2;
     public string choice1, choice2;
     public float battleTime = 300.0f, chooseTime = 30.0f;
     private float timeLeft;
@@ -19,7 +18,7 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         controller1 = player1.GetComponent<PlayerController>();
-        controller2 = player2.GetComponent<Player2Controller>();
+        controller2 = player2.GetComponent<PlayerController>();
 
         timeLeft = chooseTime;
         battle = false;
