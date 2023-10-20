@@ -7880,8 +7880,8 @@ MonoBehaviour:
   myHideCanvas: {fileID: 702866924}
   choice1: 
   choice2: 
-  battleTime: 1000
-  chooseTime: 250
+  battleTime: 15
+  chooseTime: 3
   battle: 0
   countdown: {fileID: 1229884017}
 --- !u!1 &1879816974
