@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    PlayerActions controls;
+    Vector2 move;
+    private GameObject projectilePrefab;
+    public Transform throwPosition;
     public float maxHP = 30.0f, damage = 1.0f, speed = 3.0f, jumpForce = 3.0f, cooldown = 1.0f, invincibility = 0.0f;
     private float currentHP, timeLeft, xDir;
     private int ammo;
@@ -13,8 +18,7 @@ public class PlayerController : MonoBehaviour
     public int player;
     public bool firstPlayer = false, secondPlayer = false;
 
-
-    public GameObject hammer, axe, spear, player1, player2;
+    public GameObject hammer, axe, spear, throwingHammer, throwingAxe, throwingSpear, player1, player2;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -22,6 +26,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controls = new PlayerActions();
+        
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHP = maxHP;
@@ -32,6 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         if (battle && player == 1)
         {
+            controls.BattleActions.Enable();
+            
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
             {
                 xDir = 0;
@@ -51,6 +59,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (battle && player == 2)
         {
+            controls.BattleActions.Enable();
+            
             if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
             {
                 xDir = 0;
@@ -70,38 +80,55 @@ public class PlayerController : MonoBehaviour
         }
         else if (!battle && player == 1)
         {
+            controls.BattleActions.Disable();
             xDir = 0;
+            ammo = 3;
 
             if (Input.GetKeyDown(KeyCode.A))
             {
                 weapon = "Hammer";
+                projectilePrefab = throwingHammer;
             }
             else if (Input.GetKeyDown(KeyCode.W))
             {
                 weapon = "Axe";
+                projectilePrefab = throwingAxe;
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
                 weapon = "Spear";
+                projectilePrefab = throwingSpear;
             }
         }
         else if (!battle && player == 2)
         {
+            controls.BattleActions.Disable();
             xDir = 0;
+            ammo = 3;
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 weapon = "Hammer";
+                projectilePrefab = throwingHammer;
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 weapon = "Axe";
+                projectilePrefab = throwingAxe;
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 weapon = "Spear";
+                projectilePrefab = throwingSpear;
             }
         }
+
+        controls.BattleActions.Move.performed += context => move = context.ReadValue<Vector2>();
+        xDir = move.x;
+        controls.BattleActions.Jump.performed += context => Jump();
+        controls.BattleActions.Attack.performed += context => Attack();
+        controls.BattleActions.Move.canceled += context => move = Vector2.zero;
+        controls.BattleActions.Throw.performed += context => Throw();
     }
 
     void FixedUpdate()
@@ -110,9 +137,9 @@ public class PlayerController : MonoBehaviour
         if(battle && player == 1)
         {
 
-            Move();
+            Move(xDir);
 
-            if (Input.GetKeyDown(KeyCode.W) && grounded)
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 Jump();
             }
@@ -125,9 +152,9 @@ public class PlayerController : MonoBehaviour
         else if (battle && player == 2)
         {
 
-            Move();
+            Move(xDir);
 
-            if (Input.GetKeyDown(KeyCode.UpArrow) && grounded)
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 Jump();
             }
@@ -163,10 +190,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void Move()
+    private void Move(float xDirection)
     {
-        rb.velocity = new Vector2(xDir * speed, rb.velocity.y);
-        if (xDir > 0 && !facingForward || xDir < 0 && facingForward)
+        rb.velocity = new Vector2(xDirection * speed, rb.velocity.y);
+        if (xDirection > 0 && !facingForward || xDirection < 0 && facingForward)
         {
             facingForward = !facingForward;
             Vector3 playerScale = transform.localScale;
@@ -177,7 +204,10 @@ public class PlayerController : MonoBehaviour
     
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        if (grounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
     }
 
     private void Attack()
@@ -218,6 +248,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Throw()
+    {
+        if (ammo > 0)
+        {
+            /*var newPrefab = */
+            /*newPrefab.transform.setParent(gameObject.transform);*/
+
+            var newPrefab = Instantiate(projectilePrefab, throwPosition.position, transform.rotation);
+            ammo --;
+        }
+    }
+
     public void TakeDamage(float damageTaken)
     {
         if (invincibility <= 0.0f)
@@ -249,17 +291,17 @@ public class PlayerController : MonoBehaviour
             }
     }
 
-    private void OnTriggerStay2D(Collider2D collision) // needs a trigger to work 
+    private void OnCollisionStay2D(Collision2D collision) // needs a trigger to work 
     {
-        if (collision.gameObject.tag != "Player" + player.ToString() && collision.isTrigger == false) //- ignores any colliders marked player and any colliders that are Triggers
+        if (collision.gameObject.tag != "Player" + player.ToString() /*&& collision.isTrigger == false*/) //- ignores any colliders marked player and any colliders that are Triggers
         {
             grounded = true; //if a collider NOT marked player is detected, it marks the player as being on the ground (or a surface)
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Player" + player.ToString() && collision.isTrigger == false)
+        if (collision.gameObject.tag != "Player" + player.ToString() /*&& collision.isTrigger == false*/)
         {
             grounded = false;
         }
