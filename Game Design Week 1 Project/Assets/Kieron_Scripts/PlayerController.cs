@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     public rpsSelectP2 P2C;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         controls = new PlayerActions();
@@ -44,7 +43,6 @@ public class PlayerController : MonoBehaviour
         currentHP = maxHP;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(cooldown > 0)
@@ -71,7 +69,6 @@ public class PlayerController : MonoBehaviour
 
         if (firstPlayer)
         {
-            //controls.BattleActions.Move.performed += context => xDir = horizontal1;
             horizontal = Input.GetAxisRaw("Horizontal1");
             vertical = Input.GetAxisRaw("Vertical1");
             attack = Input.GetAxisRaw("Attack1");
@@ -79,7 +76,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (secondPlayer)
         {
-            //controls.BattleActions.Move.performed += context => xDir = horizontal2;
             horizontal = Input.GetAxisRaw("Horizontal2");
             vertical = Input.GetAxisRaw("Vertical2");
             attack = Input.GetAxisRaw("Attack2");
@@ -87,7 +83,6 @@ public class PlayerController : MonoBehaviour
         }
 
         xDir = horizontal;
-        //controls.BattleActions.Move.canceled += context => xDir = 0;
     }
 
     void FixedUpdate()
@@ -111,72 +106,15 @@ public class PlayerController : MonoBehaviour
             {
                 Throw();
             }
-
-            /*if (firstPlayer)
-            {
-                if (vertical1 > 0)
-                {
-                    controls.BattleActions.Jump.performed += context => Jump();
-                }
-                
-                if (attack1 > 0)
-                {
-                    controls.BattleActions.Attack.performed += context => Attack();
-                }
-
-                if (throw1 > 0)
-                {
-                    controls.BattleActions.Throw.performed += context => Throw();
-                }
-            }
-            else if (secondPlayer)
-            {
-                if (vertical2 > 0)
-                {
-                    controls.BattleActions.Jump.performed += context => Jump();
-                }
-                
-                if (attack2 > 0)
-                {
-                    controls.BattleActions.Attack.performed += context => Attack();
-                }
-
-                if (throw2 > 0)
-                {
-                    controls.BattleActions.Throw.performed += context => Throw();
-                }
-            }*/
         }
         else
         {
             Select();
         }
-
-        /*if (invincibility > 0.0f)
-        {
-            invincibility -= 0.01f;
-        }
-        else if(invincibility == 1.0f)
-        {
-            Debug.Log("Player " + player + " is no longer invincible");
-        }*/
-    }
-
-    private IEnumerator invincible()
-    {
-        animator.SetTrigger("Damaged");
-
-        yield return new WaitForSeconds(invincibility);
-
-        invincibility = 0.0f;
-        Debug.Log("Player " + player + " is no longer invincible");
-
     }
 
     public void Select()
     {
-        if (firstPlayer)
-        {
             if (horizontal == -1)
             {
                 weapon = "Hammer";
@@ -206,79 +144,8 @@ public class PlayerController : MonoBehaviour
                 P1B.IDCheck(0);
                 P1C.IDCheck(0);
             }
-        }
 
-        if (secondPlayer)
-        {
-            if (horizontal == -1)
-            {
-                weapon = "Hammer";
-                P2A.IDCheck(1);
-                P2B.IDCheck(1);
-                P2C.IDCheck(1);
-
-            }
-            else if (horizontal == 1)
-            {
-                weapon = "Spear";
-                P2A.IDCheck(3);
-                P2B.IDCheck(3);
-                P2C.IDCheck(3);
-            }
-            else if (vertical == 1)
-            {
-                weapon = "Axe";
-                P2A.IDCheck(2);
-                P2B.IDCheck(2);
-                P2C.IDCheck(2);
-            }
-            else
-            {
-
-                P2A.IDCheck(0);
-                P2B.IDCheck(0);
-                P2C.IDCheck(0);
-            }
-        }
-
-
-        /*if (firstPlayer)
-            {
-                if (horizontal1 < 0)
-                {
-                    controls.SelectActions.Hammer.performed += context => weapon = "Hammer";
-                }
-                
-                if (vertical1 > 0)
-                {
-                    controls.SelectActions.Axe.performed += context => weapon = "Axe";
-                }
-
-                if (horizontal1 > 0)
-                {
-                    controls.SelectActions.Spear.performed += context => weapon = "Spear";
-                }
-            }
-        else if (secondPlayer)
-            {
-                if (horizontal2 < 0)
-                {
-                    controls.SelectActions.Hammer.performed += context => weapon = "Hammer";
-                }
-                
-                if (vertical2 > 0)
-                {
-                    controls.SelectActions.Axe.performed += context => weapon = "Axe";
-                }
-
-                if (horizontal2 > 0)
-                {
-                    controls.SelectActions.Spear.performed += context => weapon = "Spear";
-                }
-            }*/
-
-        ammo = 3;
-
+            ammo = 3;
     }
 
     private void Move(float xDirection)
@@ -343,8 +210,6 @@ public class PlayerController : MonoBehaviour
     {
         if (ammo > 0 && projectilePrefab != null)
         {
-            /*var newPrefab = */
-            /*newPrefab.transform.setParent(gameObject.transform);*/
             /*if (cooldown <= 0)
             {
                 var newPrefab = Instantiate(projectilePrefab, throwPosition.position, transform.rotation);
@@ -389,9 +254,20 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log("Player " + player + " Takes Damage");
                     invincibility = 1.0f;
-                    StartCoroutine(invincible());
+                    StartCoroutine(Invincible());
                 }
             }
+    }
+
+    private IEnumerator Invincible()
+    {
+        animator.SetTrigger("Damaged");
+
+        yield return new WaitForSeconds(invincibility);
+
+        invincibility = 0.0f;
+        Debug.Log("Player " + player + " is no longer invincible");
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
