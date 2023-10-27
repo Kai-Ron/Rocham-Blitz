@@ -16,6 +16,10 @@ public class BattleSystem : MonoBehaviour
 
     public TMP_Text countdown;
 
+    public AudioSource startMusic;
+
+    bool musicStart = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +46,18 @@ public class BattleSystem : MonoBehaviour
             
             if (timeLeft >= 0)
             {
+
                 timeLeft-= Time.unscaledDeltaTime;
+
+                if (timeLeft <= 2.5 && !musicStart)
+                {
+
+                    startMusic.Play(0);
+
+                    musicStart = true;
+
+                }
+
             }
             else
             {
@@ -147,10 +162,13 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
+
                 battle = false;
                 controller1.battle = false;
                 controller2.battle = false;
                 timeLeft = chooseTime;
+                musicStart = false;
+
             }
         }
     }
