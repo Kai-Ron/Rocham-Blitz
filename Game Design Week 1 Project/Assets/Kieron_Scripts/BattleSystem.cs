@@ -6,13 +6,19 @@ using TMPro;
 public class BattleSystem : MonoBehaviour
 {
     public GameObject player1, player2;
+    public HideCanvas myHideCanvas;
     private PlayerController controller1, controller2;
     public string choice1, choice2;
-    public float battleTime = 300.0f, chooseTime = 30.0f;
+    public float battleTime = 15.0f, chooseTime = 3.0f;
     private float timeLeft;
+    private float displayTime;
     public bool battle = false;
 
     public TMP_Text countdown;
+
+    public AudioSource startMusic;
+
+    bool musicStart = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,14 +35,29 @@ public class BattleSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        countdown.text = timeLeft.ToString();
+        displayTime = timeLeft;
+        displayTime = Mathf.Round(displayTime);
+        countdown.text = displayTime.ToString();
+
+        myHideCanvas.phaseCheck(battle);
 
         if (!battle)
         {
             
             if (timeLeft >= 0)
             {
-                timeLeft--;
+
+                timeLeft-= Time.unscaledDeltaTime;
+
+                if (timeLeft <= 2.5 && !musicStart)
+                {
+
+                    startMusic.Play(0);
+
+                    musicStart = true;
+
+                }
+
             }
             else
             {
@@ -143,14 +164,17 @@ public class BattleSystem : MonoBehaviour
         {
             if (timeLeft >= 0)
             {
-                timeLeft--;
+                timeLeft-= Time.unscaledDeltaTime;
             }
             else
             {
+
                 battle = false;
                 controller1.battle = false;
                 controller2.battle = false;
                 timeLeft = chooseTime;
+                musicStart = false;
+
             }
         }
     }

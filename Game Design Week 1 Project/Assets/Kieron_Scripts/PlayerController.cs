@@ -23,7 +23,16 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    
+
+    public rpsSelectP1 P1A;
+    public rpsSelectP1 P1B;
+    public rpsSelectP1 P1C;
+
+    public rpsSelectP2 P2A;
+    public rpsSelectP2 P2B;
+    public rpsSelectP2 P2C;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,21 +175,73 @@ public class PlayerController : MonoBehaviour
 
     public void Select()
     {
-        if (horizontal == -1)
+        if (firstPlayer)
         {
-            weapon = "Hammer";
+            if (horizontal == -1)
+            {
+                weapon = "Hammer";
+                P1A.IDCheck(1);
+                P1B.IDCheck(1);
+                P1C.IDCheck(1);
+
+            }
+            else if (horizontal == 1)
+            {
+                weapon = "Spear";
+                P1A.IDCheck(3);
+                P1B.IDCheck(3);
+                P1C.IDCheck(3);
+            }
+            else if (vertical == 1)
+            {
+                weapon = "Axe";
+                P1A.IDCheck(2);
+                P1B.IDCheck(2);
+                P1C.IDCheck(2);
+            }
+            else
+            {
+
+                P1A.IDCheck(0);
+                P1B.IDCheck(0);
+                P1C.IDCheck(0);
+            }
         }
 
-        if (vertical == 1)
+        if (secondPlayer)
         {
-            weapon = "Axe";
+            if (horizontal == -1)
+            {
+                weapon = "Hammer";
+                P2A.IDCheck(1);
+                P2B.IDCheck(1);
+                P2C.IDCheck(1);
+
+            }
+            else if (horizontal == 1)
+            {
+                weapon = "Spear";
+                P2A.IDCheck(3);
+                P2B.IDCheck(3);
+                P2C.IDCheck(3);
+            }
+            else if (vertical == 1)
+            {
+                weapon = "Axe";
+                P2A.IDCheck(2);
+                P2B.IDCheck(2);
+                P2C.IDCheck(2);
+            }
+            else
+            {
+
+                P2A.IDCheck(0);
+                P2B.IDCheck(0);
+                P2C.IDCheck(0);
+            }
         }
 
-        if (horizontal == 1)
-        {
-            weapon = "Spear";
-        }
-        
+
         /*if (firstPlayer)
             {
                 if (horizontal1 < 0)
@@ -216,7 +277,7 @@ public class PlayerController : MonoBehaviour
                 }
             }*/
 
-            ammo = 3;
+        ammo = 3;
 
     }
 

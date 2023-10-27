@@ -11,7 +11,7 @@ public class rpsSelectP2 : MonoBehaviour
     //Assumes Arrow Key movement and NumPad 0 to attack for Player Two
     //The acronym RPS stands for "Rock, Paper, Scissors", and refers to the selection portion of the game which is styled after it.
 
-    public bool selectPhase = true; //True when RPS selection phase is active
+    public bool battle = false; //True when RPS selection phase is active
 
     int playerTwoSelect = 0;
 
@@ -19,58 +19,19 @@ public class rpsSelectP2 : MonoBehaviour
 
     public GameObject player2Sprite;
 
-    void Start()
+    public void IDCheck(int playerTwoSelect)
     {
 
-    }
-
-    void Update()
-    {
-
-        if (selectPhase) //Detects whether players are in selection phase, in combat, or something else i.e. 
+        if (playerTwoSelect == mySelectID)
         {
 
-            //Start of selection code
-            //Detects inputs of player 2 and ajusts their respective selection values accordingly
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
+            this.GetComponent<Renderer>().enabled = true;
 
-                playerTwoSelect = 1;
+        }
+        else
+        {
 
-            }
-            else if (Input.GetKey(KeyCode.UpArrow))
-            {
-
-                playerTwoSelect = 2;
-
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-
-                playerTwoSelect = 3;
-
-            }
-            else
-            {
-
-                playerTwoSelect = 0;
-
-            }
-
-            if (playerTwoSelect == mySelectID)
-            {
-
-                this.GetComponent<Renderer>().enabled = true;
-
-            }
-            else
-            {
-
-                this.GetComponent<Renderer>().enabled = false;
-
-            }
-
-            //End of selection code
+            this.GetComponent<Renderer>().enabled = false;
 
         }
 
@@ -82,13 +43,13 @@ public class rpsSelectP2 : MonoBehaviour
         if (phase)
         {
 
-            selectPhase = true;
+            battle = false;
 
         }
         else
         {
 
-            selectPhase = false;
+            battle = true;
 
         }
 

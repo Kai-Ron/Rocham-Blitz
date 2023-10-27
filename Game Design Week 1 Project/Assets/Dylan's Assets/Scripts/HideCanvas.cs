@@ -8,10 +8,16 @@ public class HideCanvas : MonoBehaviour
     //In the code for starting the "selection" phase, call the phaseCheck function.
     //Have it return "true" when selection is happening and "false" when it isn't
 
-    public bool selectPhase = true; //True when RPS selection phase is active
+    public bool battle = false; //True when RPS selection phase is active
 
-    public rpsSelectP1 myP1;
-    public rpsSelectP2 myP2;
+    public rpsSelectP1 myP1A;
+    public rpsSelectP1 myP1B;
+    public rpsSelectP1 myP1C;
+
+    public rpsSelectP2 myP2A;
+    public rpsSelectP2 myP2B;
+    public rpsSelectP2 myP2C;
+
 
 
     // Start is called before the first frame update
@@ -24,21 +30,26 @@ public class HideCanvas : MonoBehaviour
     void Update()
     {
 
-        if (selectPhase)
+        if (battle)
         {
 
-            this.GetComponent<Renderer>().enabled = true;
+            this.transform.localScale = new Vector3(1, 1, 1);
 
         }
         else
         {
 
-            this.GetComponent<Renderer>().enabled = false;
+            this.transform.localScale = new Vector3 (0, 0, 0);
 
         }
 
-        myP1.phaseCheck(selectPhase);
-        myP2.phaseCheck(selectPhase);
+        myP1A.phaseCheck(battle);
+        myP1B.phaseCheck(battle);
+        myP1C.phaseCheck(battle);
+
+        myP2A.phaseCheck(battle);
+        myP2B.phaseCheck(battle);
+        myP2C.phaseCheck(battle);
 
     }
 
@@ -48,13 +59,13 @@ public class HideCanvas : MonoBehaviour
         if (phase)
         {
 
-            selectPhase = true;
+            battle = false;
 
         }
         else
         {
 
-            selectPhase = false;
+            battle = true;
 
         }
 
