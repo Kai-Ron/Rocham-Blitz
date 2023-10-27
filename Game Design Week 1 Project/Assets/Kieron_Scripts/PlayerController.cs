@@ -23,7 +23,11 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    
+
+    public rpsSelectP1 p1Select;
+    public rpsSelectP2 p2Select;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -165,21 +169,59 @@ public class PlayerController : MonoBehaviour
 
     public void Select()
     {
-        if (horizontal == -1)
+        if (firstPlayer)
         {
-            weapon = "Hammer";
+            if (horizontal == -1)
+            {
+                weapon = "Hammer";
+                p1Select.IDCheck(1);
+            }
+            else if (horizontal == 1)
+            {
+                weapon = "Spear";
+                p1Select.IDCheck(2);
+
+            }
+            else if (vertical == 1)
+            {
+                weapon = "Axe";
+                p1Select.IDCheck(3);
+
+            }
+            else
+            {
+
+                p1Select.IDCheck(0);
+
+            }
         }
 
-        if (vertical == 1)
+        if (secondPlayer)
         {
-            weapon = "Axe";
+            if (horizontal == -1)
+            {
+                weapon = "Hammer";
+                p2Select.IDCheck(1);
+            }
+            else if (horizontal == 1)
+            {
+                weapon = "Spear";
+                p2Select.IDCheck(2);
+            }
+            else if (vertical == 1)
+            {
+                weapon = "Axe";
+                p2Select.IDCheck(3);
+            }
+            else
+            {
+
+                p2Select.IDCheck(0);
+
+            }
         }
 
-        if (horizontal == 1)
-        {
-            weapon = "Spear";
-        }
-        
+
         /*if (firstPlayer)
             {
                 if (horizontal1 < 0)
@@ -215,7 +257,7 @@ public class PlayerController : MonoBehaviour
                 }
             }*/
 
-            ammo = 3;
+        ammo = 3;
 
     }
 

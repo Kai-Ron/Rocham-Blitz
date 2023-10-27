@@ -19,58 +19,19 @@ public class rpsSelectP2 : MonoBehaviour
 
     public GameObject player2Sprite;
 
-    void Start()
+    public void IDCheck(int playerTwoSelect)
     {
 
-    }
-
-    void Update()
-    {
-
-        if (!battle) //Detects whether players are in selection phase, in combat, or something else i.e. 
+        if (playerTwoSelect == mySelectID)
         {
 
-            //Start of selection code
-            //Detects inputs of player 2 and ajusts their respective selection values accordingly
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
+            this.GetComponent<Renderer>().enabled = true;
 
-                playerTwoSelect = 1;
+        }
+        else
+        {
 
-            }
-            else if (Input.GetKey(KeyCode.UpArrow))
-            {
-
-                playerTwoSelect = 2;
-
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-
-                playerTwoSelect = 3;
-
-            }
-            else
-            {
-
-                playerTwoSelect = 0;
-
-            }
-
-            if (playerTwoSelect == mySelectID)
-            {
-
-                this.GetComponent<Renderer>().enabled = true;
-
-            }
-            else
-            {
-
-                this.GetComponent<Renderer>().enabled = false;
-
-            }
-
-            //End of selection code
+            this.GetComponent<Renderer>().enabled = false;
 
         }
 
