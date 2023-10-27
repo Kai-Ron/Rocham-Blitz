@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(invincibility);
 
+        invincibility = 0.0f;
         Debug.Log("Player " + player + " is no longer invincible");
 
     }
@@ -312,24 +313,24 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damageTaken)
     {
-        if (invincibility <= 0.0f)
-        {
-            currentHP -= damageTaken;
-            if (currentHP <= 0.0f)
+        
+            if (invincibility <= 0)
             {
-                //animator.SetTrigger("Dead");
-                Debug.Log("Player " + player + " Loses");
+                currentHP -= damageTaken;
+                if (currentHP <= 0.0f)
+                {
+                    //animator.SetTrigger("Dead");
+                    Debug.Log("Player " + player + " Loses");
 
-                Destroy(this);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Debug.Log("Player " + player + " Takes Damage");
+                    invincibility = 1.0f;
+                    StartCoroutine(invincible());
+                }
             }
-            else
-            {
-                Debug.Log("Player " + player + " Takes Damage");
-
-                invincibility = 1.0f;
-                StartCoroutine(invincible());
-            }
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon1
       objectReference: {fileID: 0}
+    - target: {fileID: 3077462664385609929, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3574157373937552252, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
       propertyPath: m_TagString
       value: Weapon1
