@@ -9,14 +9,15 @@ public class PlayerController : MonoBehaviour
     Vector2 move;
     private GameObject projectilePrefab;
     public Transform throwPosition;
-    public float maxHP = 30.0f, damage = 1.0f, speed = 3.0f, jumpForce = 3.0f, cooldown = 1.0f, invincibility = 0.0f;
-    private float currentHP, timeLeft, xDir;
+    public float maxHP = 30.0f, currentHP, damage = 1.0f, speed = 3.0f, jumpForce = 3.0f, cooldown = 1.0f, invincibility = 0.0f;
+    private float timeLeft, xDir;
     private int ammo;
     public string weapon;
     public bool battle = false;
     private bool grounded = true, facingForward = true;
     public int player;
     public bool firstPlayer = false, secondPlayer = false;
+    private float horizontal, vertical, attack, throws;
 
     public GameObject hammer, axe, spear, throwingHammer, throwingAxe, throwingSpear, player1, player2;
 
@@ -30,149 +31,126 @@ public class PlayerController : MonoBehaviour
         
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
         currentHP = maxHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (battle && player == 1)
+        if(cooldown > 0)
+        {
+            cooldown = cooldown - 0.01f;
+        }
+
+        if (battle)
         {
             controls.BattleActions.Enable();
-            
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-            {
-                xDir = 0;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                xDir = -1;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                xDir = 1;
-            }
-            else
-            {
-                xDir = 0;
-            }
+            controls.SelectActions.Disable();
         }
-        else if (battle && player == 2)
-        {
-            controls.BattleActions.Enable();
-            
-            if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
-            {
-                xDir = 0;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                xDir = -1;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                xDir = 1;
-            }
-            else
-            {
-                xDir = 0;
-            }
-        }
-        else if (!battle && player == 1)
+        else
         {
             controls.BattleActions.Disable();
-            xDir = 0;
+            controls.SelectActions.Enable();
+
             ammo = 3;
 
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                weapon = "Hammer";
-                projectilePrefab = throwingHammer;
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                weapon = "Axe";
-                projectilePrefab = throwingAxe;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                weapon = "Spear";
-                projectilePrefab = throwingSpear;
-            }
+            hammer.SetActive(false);
+            axe.SetActive(false);
+            spear.SetActive(false);
         }
-        else if (!battle && player == 2)
+
+        if (firstPlayer)
         {
-            controls.BattleActions.Disable();
-            xDir = 0;
-            ammo = 3;
-
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                weapon = "Hammer";
-                projectilePrefab = throwingHammer;
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                weapon = "Axe";
-                projectilePrefab = throwingAxe;
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                weapon = "Spear";
-                projectilePrefab = throwingSpear;
-            }
+            //controls.BattleActions.Move.performed += context => xDir = horizontal1;
+            horizontal = Input.GetAxisRaw("Horizontal1");
+            vertical = Input.GetAxisRaw("Vertical1");
+            attack = Input.GetAxisRaw("Attack1");
+            throws = Input.GetAxisRaw("Throw1");
+        }
+        else if (secondPlayer)
+        {
+            //controls.BattleActions.Move.performed += context => xDir = horizontal2;
+            horizontal = Input.GetAxisRaw("Horizontal2");
+            vertical = Input.GetAxisRaw("Vertical2");
+            attack = Input.GetAxisRaw("Attack2");
+            throws = Input.GetAxisRaw("Throw2");
         }
 
-        controls.BattleActions.Move.performed += context => move = context.ReadValue<Vector2>();
-        xDir = move.x;
-        controls.BattleActions.Jump.performed += context => Jump();
-        controls.BattleActions.Attack.performed += context => Attack();
-        controls.BattleActions.Move.canceled += context => move = Vector2.zero;
-        controls.BattleActions.Throw.performed += context => Throw();
+        xDir = horizontal;
+        //controls.BattleActions.Move.canceled += context => xDir = 0;
     }
 
     void FixedUpdate()
     {
 
-        if(battle && player == 1)
+        if(battle)
         {
-
             Move(xDir);
 
-            if (Input.GetKeyDown(KeyCode.W))
+            if (vertical == 1)
             {
                 Jump();
             }
 
-            if (Input.GetKeyDown(KeyCode.S))
+            if (attack == 1)
             {
                 Attack();
             }
+
+            if (throws  == 1)
+            {
+                Throw();
+            }
+
+            /*if (firstPlayer)
+            {
+                if (vertical1 > 0)
+                {
+                    controls.BattleActions.Jump.performed += context => Jump();
+                }
+                
+                if (attack1 > 0)
+                {
+                    controls.BattleActions.Attack.performed += context => Attack();
+                }
+
+                if (throw1 > 0)
+                {
+                    controls.BattleActions.Throw.performed += context => Throw();
+                }
+            }
+            else if (secondPlayer)
+            {
+                if (vertical2 > 0)
+                {
+                    controls.BattleActions.Jump.performed += context => Jump();
+                }
+                
+                if (attack2 > 0)
+                {
+                    controls.BattleActions.Attack.performed += context => Attack();
+                }
+
+                if (throw2 > 0)
+                {
+                    controls.BattleActions.Throw.performed += context => Throw();
+                }
+            }*/
         }
-        else if (battle && player == 2)
+        else
         {
-
-            Move(xDir);
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                Jump();
-            }
-
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                Attack();
-            }
+            Select();
         }
 
-        if (invincibility > 0.0f)
+        /*if (invincibility > 0.0f)
         {
             invincibility -= 0.01f;
         }
         else if(invincibility == 1.0f)
         {
             Debug.Log("Player " + player + " is no longer invincible");
-        }
+        }*/
     }
 
     private IEnumerator invincible()
@@ -187,13 +165,64 @@ public class PlayerController : MonoBehaviour
 
     public void Select()
     {
+        if (horizontal == -1)
+        {
+            weapon = "Hammer";
+        }
+
+        if (vertical == 1)
+        {
+            weapon = "Axe";
+        }
+
+        if (horizontal == 1)
+        {
+            weapon = "Spear";
+        }
+        
+        /*if (firstPlayer)
+            {
+                if (horizontal1 < 0)
+                {
+                    controls.SelectActions.Hammer.performed += context => weapon = "Hammer";
+                }
+                
+                if (vertical1 > 0)
+                {
+                    controls.SelectActions.Axe.performed += context => weapon = "Axe";
+                }
+
+                if (horizontal1 > 0)
+                {
+                    controls.SelectActions.Spear.performed += context => weapon = "Spear";
+                }
+            }
+        else if (secondPlayer)
+            {
+                if (horizontal2 < 0)
+                {
+                    controls.SelectActions.Hammer.performed += context => weapon = "Hammer";
+                }
+                
+                if (vertical2 > 0)
+                {
+                    controls.SelectActions.Axe.performed += context => weapon = "Axe";
+                }
+
+                if (horizontal2 > 0)
+                {
+                    controls.SelectActions.Spear.performed += context => weapon = "Spear";
+                }
+            }*/
+
+            ammo = 3;
 
     }
 
     private void Move(float xDirection)
     {
         rb.velocity = new Vector2(xDirection * speed, rb.velocity.y);
-        if (xDirection > 0 && !facingForward || xDirection < 0 && facingForward)
+        if (xDirection == 1 && !facingForward || xDirection == -1 && facingForward)
         {
             facingForward = !facingForward;
             Vector3 playerScale = transform.localScale;
@@ -250,14 +279,35 @@ public class PlayerController : MonoBehaviour
 
     public void Throw()
     {
-        if (ammo > 0)
+        if (ammo > 0 && projectilePrefab != null)
         {
             /*var newPrefab = */
             /*newPrefab.transform.setParent(gameObject.transform);*/
-
-            var newPrefab = Instantiate(projectilePrefab, throwPosition.position, transform.rotation);
-            ammo --;
+            /*if (cooldown <= 0)
+            {
+                var newPrefab = Instantiate(projectilePrefab, throwPosition.position, transform.rotation);
+                ammo --;
+                cooldown = 1.0f;
+            }*/
         }
+    }
+
+    public void PickUpHammer()
+    {
+        projectilePrefab = throwingHammer;
+        ammo = 3;
+    }
+
+    public void PickUpAxe()
+    {
+        projectilePrefab = throwingAxe;
+        ammo = 3;
+    }
+
+    public void PickUpSpear()
+    {
+        projectilePrefab = throwingSpear;
+        ammo = 3;
     }
 
     public void TakeDamage(float damageTaken)
@@ -267,14 +317,17 @@ public class PlayerController : MonoBehaviour
             currentHP -= damageTaken;
             if (currentHP <= 0.0f)
             {
-                // animator.SetTrigger("Dead");
+                //animator.SetTrigger("Dead");
                 Debug.Log("Player " + player + " Loses");
+
+                Destroy(this);
             }
             else
             {
+                Debug.Log("Player " + player + " Takes Damage");
+
                 invincibility = 1.0f;
                 StartCoroutine(invincible());
-                Debug.Log("Player " + player + " Takes Damage");
             }
         }
     }
@@ -289,11 +342,29 @@ public class PlayerController : MonoBehaviour
             {
                 player1.GetComponent<PlayerController>().TakeDamage(damage);
             }
+
+            if(collision.gameObject.tag == "Hammer")
+            {
+                projectilePrefab = throwingHammer;
+                ammo = 3;
+            }
+
+            if(collision.gameObject.tag == "Axe")
+            {
+                projectilePrefab = throwingAxe;
+                ammo = 3;
+            }
+
+            if(collision.gameObject.tag == "Spear")
+            {
+                projectilePrefab = throwingSpear;
+                ammo = 3;
+            }
     }
 
     private void OnCollisionStay2D(Collision2D collision) // needs a trigger to work 
     {
-        if (collision.gameObject.tag != "Player" + player.ToString() /*&& collision.isTrigger == false*/) //- ignores any colliders marked player and any colliders that are Triggers
+        if (collision.gameObject.tag == "Ground" /*&& collision.isTrigger == false*/) //- ignores any colliders marked player and any colliders that are Triggers
         {
             grounded = true; //if a collider NOT marked player is detected, it marks the player as being on the ground (or a surface)
         }
@@ -301,7 +372,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Player" + player.ToString() /*&& collision.isTrigger == false*/)
+        if (collision.gameObject.tag == "Ground" /*&& collision.isTrigger == false*/)
         {
             grounded = false;
         }
