@@ -24,8 +24,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
-    public rpsSelectP1 p1Select;
-    public rpsSelectP2 p2Select;
+    public rpsSelectP1 P1A;
+    public rpsSelectP1 P1B;
+    public rpsSelectP1 P1C;
+
+    public rpsSelectP2 P2A;
+    public rpsSelectP2 P2B;
+    public rpsSelectP2 P2C;
 
 
     // Start is called before the first frame update
@@ -174,25 +179,31 @@ public class PlayerController : MonoBehaviour
             if (horizontal == -1)
             {
                 weapon = "Hammer";
-                p1Select.IDCheck(1);
+                P1A.IDCheck(1);
+                P1B.IDCheck(1);
+                P1C.IDCheck(1);
+
             }
             else if (horizontal == 1)
             {
                 weapon = "Spear";
-                p1Select.IDCheck(2);
-
+                P1A.IDCheck(3);
+                P1B.IDCheck(3);
+                P1C.IDCheck(3);
             }
             else if (vertical == 1)
             {
                 weapon = "Axe";
-                p1Select.IDCheck(3);
-
+                P1A.IDCheck(2);
+                P1B.IDCheck(2);
+                P1C.IDCheck(2);
             }
             else
             {
 
-                p1Select.IDCheck(0);
-
+                P1A.IDCheck(0);
+                P1B.IDCheck(0);
+                P1C.IDCheck(0);
             }
         }
 
@@ -201,23 +212,31 @@ public class PlayerController : MonoBehaviour
             if (horizontal == -1)
             {
                 weapon = "Hammer";
-                p2Select.IDCheck(1);
+                P2A.IDCheck(1);
+                P2B.IDCheck(1);
+                P2C.IDCheck(1);
+
             }
             else if (horizontal == 1)
             {
                 weapon = "Spear";
-                p2Select.IDCheck(2);
+                P2A.IDCheck(3);
+                P2B.IDCheck(3);
+                P2C.IDCheck(3);
             }
             else if (vertical == 1)
             {
                 weapon = "Axe";
-                p2Select.IDCheck(3);
+                P2A.IDCheck(2);
+                P2B.IDCheck(2);
+                P2C.IDCheck(2);
             }
             else
             {
 
-                p2Select.IDCheck(0);
-
+                P2A.IDCheck(0);
+                P2B.IDCheck(0);
+                P2C.IDCheck(0);
             }
         }
 

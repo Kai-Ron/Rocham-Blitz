@@ -282,6 +282,17 @@ Transform:
   - {fileID: 350011711}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &214402578 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1106683148236795905, guid: 0bcbd54d2604f4846b27ff07c02d6356, type: 3}
+  m_PrefabInstance: {fileID: 472172600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0610658ab6c8ce94f830ee836f62f4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &225952239 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2156701132975561266, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
@@ -623,11 +634,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ae886039b0d624da84d5ff2c58b3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &823460191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1115377500540361569, guid: 0bcbd54d2604f4846b27ff07c02d6356, type: 3}
+  m_PrefabInstance: {fileID: 472172600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0610658ab6c8ce94f830ee836f62f4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &824432451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2156701132975561266, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
   m_PrefabInstance: {fileID: 861794734}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &843199509 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8578216062363545579, guid: 0bcbd54d2604f4846b27ff07c02d6356, type: 3}
+  m_PrefabInstance: {fileID: 472172600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c076e22bd58a6ee47bea9bb813bf65e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &861794734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,6 +697,30 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon2
       objectReference: {fileID: 0}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P1A
+      value: 
+      objectReference: {fileID: 1962605036}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P1B
+      value: 
+      objectReference: {fileID: 1845238510}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P1C
+      value: 
+      objectReference: {fileID: 843199509}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P2A
+      value: 
+      objectReference: {fileID: 1664032339}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P2B
+      value: 
+      objectReference: {fileID: 823460191}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P2C
+      value: 
+      objectReference: {fileID: 214402578}
     - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
       propertyPath: player
       value: 2
@@ -4184,6 +4241,17 @@ MonoBehaviour:
   battle: 0
   countdown: {fileID: 1143134447}
   startMusic: {fileID: 1717179695}
+--- !u!114 &1664032339 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3800981534220047808, guid: 0bcbd54d2604f4846b27ff07c02d6356, type: 3}
+  m_PrefabInstance: {fileID: 472172600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0610658ab6c8ce94f830ee836f62f4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1717179694
 GameObject:
   m_ObjectHideFlags: 0
@@ -4194,7 +4262,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1717179696}
   - component: {fileID: 1717179695}
-  - component: {fileID: 1717179697}
   m_Layer: 0
   m_Name: Opening Music
   m_TagString: Untagged
@@ -4313,19 +4380,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1717179697
+--- !u!114 &1845238510 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3307365082419131698, guid: 0bcbd54d2604f4846b27ff07c02d6356, type: 3}
+  m_PrefabInstance: {fileID: 472172600}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717179694}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb0279939ccb1442991815f261a3e2d, type: 3}
+  m_Script: {fileID: 11500000, guid: c076e22bd58a6ee47bea9bb813bf65e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMusic: {fileID: 0}
 --- !u!1 &1937201843
 GameObject:
   m_ObjectHideFlags: 0
@@ -4372,6 +4437,17 @@ Transform:
   - {fileID: 1267613873}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1962605036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6688392911018665924, guid: 0bcbd54d2604f4846b27ff07c02d6356, type: 3}
+  m_PrefabInstance: {fileID: 472172600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c076e22bd58a6ee47bea9bb813bf65e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2034928438
 GameObject:
   m_ObjectHideFlags: 0
@@ -4492,6 +4568,30 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon1
       objectReference: {fileID: 0}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P1A
+      value: 
+      objectReference: {fileID: 1962605036}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P1B
+      value: 
+      objectReference: {fileID: 1845238510}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P1C
+      value: 
+      objectReference: {fileID: 843199509}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P2A
+      value: 
+      objectReference: {fileID: 1664032339}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P2B
+      value: 
+      objectReference: {fileID: 823460191}
+    - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
+      propertyPath: P2C
+      value: 
+      objectReference: {fileID: 214402578}
     - target: {fileID: 3954557174077356915, guid: 6da59f7da05523a4a878868fad74bfa1, type: 3}
       propertyPath: player
       value: 1
