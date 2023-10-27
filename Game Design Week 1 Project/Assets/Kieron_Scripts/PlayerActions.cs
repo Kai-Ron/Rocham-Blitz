@@ -132,6 +132,74 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SelectActions"",
+            ""id"": ""dd682474-b7b6-4b9e-b71a-076752380fbe"",
+            ""actions"": [
+                {
+                    ""name"": ""Hammer"",
+                    ""type"": ""Button"",
+                    ""id"": ""220f2698-73f6-47b8-a022-9c376a665a99"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Axe"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bb93990-7541-4a51-9021-3dfb216d3a4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spear"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd472d3a-67f1-4ccf-ab73-2952d9170427"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ee54c102-1724-4d9a-86fc-65a383d7cc4a"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hammer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e11abd0-c4c5-4aa6-acbc-dd84f5c0fb1e"",
+                    ""path"": ""<Joystick>/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f165778d-4bcc-4034-8cd2-07933d8cce7d"",
+                    ""path"": ""<Joystick>/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spear"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -142,6 +210,11 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_BattleActions_Attack = m_BattleActions.FindAction("Attack", throwIfNotFound: true);
         m_BattleActions_Move = m_BattleActions.FindAction("Move", throwIfNotFound: true);
         m_BattleActions_Throw = m_BattleActions.FindAction("Throw", throwIfNotFound: true);
+        // SelectActions
+        m_SelectActions = asset.FindActionMap("SelectActions", throwIfNotFound: true);
+        m_SelectActions_Hammer = m_SelectActions.FindAction("Hammer", throwIfNotFound: true);
+        m_SelectActions_Axe = m_SelectActions.FindAction("Axe", throwIfNotFound: true);
+        m_SelectActions_Spear = m_SelectActions.FindAction("Spear", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -269,11 +342,79 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         }
     }
     public BattleActionsActions @BattleActions => new BattleActionsActions(this);
+
+    // SelectActions
+    private readonly InputActionMap m_SelectActions;
+    private List<ISelectActionsActions> m_SelectActionsActionsCallbackInterfaces = new List<ISelectActionsActions>();
+    private readonly InputAction m_SelectActions_Hammer;
+    private readonly InputAction m_SelectActions_Axe;
+    private readonly InputAction m_SelectActions_Spear;
+    public struct SelectActionsActions
+    {
+        private @PlayerActions m_Wrapper;
+        public SelectActionsActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Hammer => m_Wrapper.m_SelectActions_Hammer;
+        public InputAction @Axe => m_Wrapper.m_SelectActions_Axe;
+        public InputAction @Spear => m_Wrapper.m_SelectActions_Spear;
+        public InputActionMap Get() { return m_Wrapper.m_SelectActions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SelectActionsActions set) { return set.Get(); }
+        public void AddCallbacks(ISelectActionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SelectActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SelectActionsActionsCallbackInterfaces.Add(instance);
+            @Hammer.started += instance.OnHammer;
+            @Hammer.performed += instance.OnHammer;
+            @Hammer.canceled += instance.OnHammer;
+            @Axe.started += instance.OnAxe;
+            @Axe.performed += instance.OnAxe;
+            @Axe.canceled += instance.OnAxe;
+            @Spear.started += instance.OnSpear;
+            @Spear.performed += instance.OnSpear;
+            @Spear.canceled += instance.OnSpear;
+        }
+
+        private void UnregisterCallbacks(ISelectActionsActions instance)
+        {
+            @Hammer.started -= instance.OnHammer;
+            @Hammer.performed -= instance.OnHammer;
+            @Hammer.canceled -= instance.OnHammer;
+            @Axe.started -= instance.OnAxe;
+            @Axe.performed -= instance.OnAxe;
+            @Axe.canceled -= instance.OnAxe;
+            @Spear.started -= instance.OnSpear;
+            @Spear.performed -= instance.OnSpear;
+            @Spear.canceled -= instance.OnSpear;
+        }
+
+        public void RemoveCallbacks(ISelectActionsActions instance)
+        {
+            if (m_Wrapper.m_SelectActionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISelectActionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SelectActionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SelectActionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SelectActionsActions @SelectActions => new SelectActionsActions(this);
     public interface IBattleActionsActions
     {
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
+    }
+    public interface ISelectActionsActions
+    {
+        void OnHammer(InputAction.CallbackContext context);
+        void OnAxe(InputAction.CallbackContext context);
+        void OnSpear(InputAction.CallbackContext context);
     }
 }

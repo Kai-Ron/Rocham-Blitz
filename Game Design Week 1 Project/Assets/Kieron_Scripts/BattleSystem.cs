@@ -53,11 +53,13 @@ public class BattleSystem : MonoBehaviour
                                 case "Axe":
                                     {
                                         controller1.weapon = null;
+                                        controller1.PickUpHammer();
                                         break;
                                     }
                                 case "Spear":
                                     {
                                         controller2.weapon = null;
+                                        controller2.PickUpSpear();
                                         break;
                                     }
                                 default:
@@ -75,6 +77,7 @@ public class BattleSystem : MonoBehaviour
                                 case "Hammer":
                                     {
                                         controller2.weapon = null;
+                                        controller2.PickUpHammer();
                                         break;
                                     }
                                 case "Axe":
@@ -84,6 +87,7 @@ public class BattleSystem : MonoBehaviour
                                 case "Spear":
                                     {
                                         controller1.weapon = null;
+                                        controller1.PickUpAxe();
                                         break;
                                     }
                                 default:
@@ -101,11 +105,13 @@ public class BattleSystem : MonoBehaviour
                                 case "Hammer":
                                     {
                                         controller1.weapon = null;
+                                        controller1.PickUpSpear();
                                         break;
                                     }
                                 case "Axe":
                                     {
                                         controller2.weapon = null;
+                                        controller2.PickUpAxe();
                                         break;
                                     }
                                 case "Spear":

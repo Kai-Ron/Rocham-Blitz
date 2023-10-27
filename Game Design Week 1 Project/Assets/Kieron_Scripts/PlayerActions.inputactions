@@ -110,6 +110,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SelectActions",
+            "id": "dd682474-b7b6-4b9e-b71a-076752380fbe",
+            "actions": [
+                {
+                    "name": "Hammer",
+                    "type": "Button",
+                    "id": "220f2698-73f6-47b8-a022-9c376a665a99",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Axe",
+                    "type": "Button",
+                    "id": "4bb93990-7541-4a51-9021-3dfb216d3a4f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spear",
+                    "type": "Button",
+                    "id": "cd472d3a-67f1-4ccf-ab73-2952d9170427",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ee54c102-1724-4d9a-86fc-65a383d7cc4a",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hammer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e11abd0-c4c5-4aa6-acbc-dd84f5c0fb1e",
+                    "path": "<Joystick>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Axe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f165778d-4bcc-4034-8cd2-07933d8cce7d",
+                    "path": "<Joystick>/stick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spear",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
