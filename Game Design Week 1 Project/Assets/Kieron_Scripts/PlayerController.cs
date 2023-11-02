@@ -27,10 +27,16 @@ public class PlayerController : MonoBehaviour
     public rpsSelectP1 P1A;
     public rpsSelectP1 P1B;
     public rpsSelectP1 P1C;
+    public rpsSelectP1 P1D;
+    public rpsSelectP1 P1E;
+    public rpsSelectP1 P1F;
 
     public rpsSelectP2 P2A;
     public rpsSelectP2 P2B;
     public rpsSelectP2 P2C;
+    public rpsSelectP2 P2D;
+    public rpsSelectP2 P2E;
+    public rpsSelectP2 P2F;
 
 
     void Start()
@@ -115,12 +121,18 @@ public class PlayerController : MonoBehaviour
 
     public void Select()
     {
+
+        if (firstPlayer)
+        {
             if (horizontal == -1)
             {
                 weapon = "Hammer";
                 P1A.IDCheck(1);
                 P1B.IDCheck(1);
                 P1C.IDCheck(1);
+                P1D.IDCheck(1);
+                P1E.IDCheck(1);
+                P1F.IDCheck(1);
 
             }
             else if (horizontal == 1)
@@ -129,6 +141,9 @@ public class PlayerController : MonoBehaviour
                 P1A.IDCheck(3);
                 P1B.IDCheck(3);
                 P1C.IDCheck(3);
+                P1D.IDCheck(3);
+                P1E.IDCheck(3);
+                P1F.IDCheck(3);
             }
             else if (vertical == 1)
             {
@@ -136,6 +151,10 @@ public class PlayerController : MonoBehaviour
                 P1A.IDCheck(2);
                 P1B.IDCheck(2);
                 P1C.IDCheck(2);
+                P1D.IDCheck(2);
+                P1E.IDCheck(2);
+                P1F.IDCheck(2);
+
             }
             else
             {
@@ -143,9 +162,62 @@ public class PlayerController : MonoBehaviour
                 P1A.IDCheck(0);
                 P1B.IDCheck(0);
                 P1C.IDCheck(0);
+                P1D.IDCheck(0);
+                P1E.IDCheck(0);
+                P1F.IDCheck(0);
             }
 
-            ammo = 3;
+        }
+
+        if (secondPlayer)
+        {
+            if (horizontal == -1)
+            {
+                weapon = "Hammer";
+                P2A.IDCheck(1);
+                P2B.IDCheck(1);
+                P2C.IDCheck(1);
+                P2D.IDCheck(1);
+                P2E.IDCheck(1);
+                P2F.IDCheck(1);
+
+            }
+            else if (horizontal == 1)
+            {
+                weapon = "Spear";
+                P2A.IDCheck(3);
+                P2B.IDCheck(3);
+                P2C.IDCheck(3);
+                P2D.IDCheck(3);
+                P2E.IDCheck(3);
+                P2F.IDCheck(3);
+            }
+            else if (vertical == 1)
+            {
+                weapon = "Axe";
+                P2A.IDCheck(2);
+                P2B.IDCheck(2);
+                P2C.IDCheck(2);
+                P2D.IDCheck(2);
+                P2E.IDCheck(2);
+                P2F.IDCheck(2);
+
+            }
+            else
+            {
+
+                P2A.IDCheck(0);
+                P2B.IDCheck(0);
+                P2C.IDCheck(0);
+                P2D.IDCheck(0);
+                P2E.IDCheck(0);
+                P2F.IDCheck(0);
+            }
+
+        }
+
+        ammo = 3;
+
     }
 
     private void Move(float xDirection)
