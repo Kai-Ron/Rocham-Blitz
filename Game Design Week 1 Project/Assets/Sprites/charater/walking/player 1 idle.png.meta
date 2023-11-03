@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ca83f2193b7e8468db814d37d1db370a
+guid: 6b72f05017fc240aeb013c1c18e9f82f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player 1 walking animation_0
+      name: player 1 idle_0
       rect:
         serializedVersion: 2
         x: 1
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00644e18b9fa5414c97e6ad2f4061134
-      internalID: -1570078680
+      spriteID: 423b3a6e0c1e946638c14ee9e841395e
+      internalID: -112835627
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player 1 walking animation_1
+      name: player 1 idle_1
       rect:
         serializedVersion: 2
-        x: 24
-        y: 65
-        width: 18
-        height: 32
+        x: 25
+        y: 66
+        width: 16
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95cd00403f58e44668988c53c31f5d71
-      internalID: -1480816476
+      spriteID: 3d96ab728aa704153bc5374663e8e34d
+      internalID: -1966159978
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player 1 walking animation_2
+      name: player 1 idle_2
       rect:
         serializedVersion: 2
         x: 47
@@ -166,50 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 681dafaca15e4484c9a51044d1fc7020
-      internalID: -639660955
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player 1 walking animation_3
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 66
-        width: 16
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ae62c196835a49529de8697027553c4
-      internalID: 1578903733
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player 1 walking animation_4
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 29
-        width: 18
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a2d1a54f9ca14978a3c7b3f0eb08d2a
-      internalID: -1685565034
+      spriteID: 0d97879e4c021430b8effdf912327316
+      internalID: -1399755998
       vertices: []
       indices: 
       edges: []
@@ -225,11 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      player 1 walking animation_0: -1570078680
-      player 1 walking animation_1: -1480816476
-      player 1 walking animation_2: -639660955
-      player 1 walking animation_3: 1578903733
-      player 1 walking animation_4: -1685565034
+      player 1 idle_0: -112835627
+      player 1 idle_1: -1966159978
+      player 1 idle_2: -1399755998
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
