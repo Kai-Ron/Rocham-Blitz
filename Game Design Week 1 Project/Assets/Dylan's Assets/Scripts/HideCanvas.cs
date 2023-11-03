@@ -13,11 +13,16 @@ public class HideCanvas : MonoBehaviour
     public rpsSelectP1 myP1A;
     public rpsSelectP1 myP1B;
     public rpsSelectP1 myP1C;
+    public rpsSelectP1 myP1D;
+    public rpsSelectP1 myP1E;
+    public rpsSelectP1 myP1F;
 
     public rpsSelectP2 myP2A;
     public rpsSelectP2 myP2B;
     public rpsSelectP2 myP2C;
-
+    public rpsSelectP2 myP2D;
+    public rpsSelectP2 myP2E;
+    public rpsSelectP2 myP2F;
 
 
     // Start is called before the first frame update
@@ -33,7 +38,7 @@ public class HideCanvas : MonoBehaviour
         if (battle)
         {
 
-            this.transform.localScale = new Vector3(1, 1, 1);
+            this.transform.localScale = new Vector3(1.45f, 1.45f, 1.45f);
 
         }
         else
@@ -46,10 +51,16 @@ public class HideCanvas : MonoBehaviour
         myP1A.phaseCheck(battle);
         myP1B.phaseCheck(battle);
         myP1C.phaseCheck(battle);
+        myP1D.phaseCheck(battle);
+        myP1E.phaseCheck(battle);
+        myP1F.phaseCheck(battle);
 
         myP2A.phaseCheck(battle);
         myP2B.phaseCheck(battle);
         myP2C.phaseCheck(battle);
+        myP2D.phaseCheck(battle);
+        myP2E.phaseCheck(battle);
+        myP2F.phaseCheck(battle);
 
     }
 
