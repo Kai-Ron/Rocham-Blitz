@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 45453455978484174}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 1}
+  m_Color: {r: 0.1851192, g: 0.1851192, b: 0.9056604, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwPosition: {fileID: 5216006452559678453}
   maxHP: 10
+  currentHP: 0
   damage: 1
   speed: 5
   jumpForce: 15
@@ -185,17 +186,29 @@ MonoBehaviour:
   invincibility: 0
   weapon: 
   battle: 1
-  player: 0
-  firstPlayer: 0
-  secondPlayer: 0
+  player: 1
+  firstPlayer: 1
+  secondPlayer: 1
   hammer: {fileID: 6941789344145946301}
   axe: {fileID: 2520168654428255126}
   spear: {fileID: 3574157373937552252}
-  throwingHammer: {fileID: 1933571821476410829, guid: b4db55c2cbf298347b44f719b02638a9, type: 3}
-  throwingAxe: {fileID: 168650996188664832, guid: 8349356b8477d664ebc7eefc621e9cb9, type: 3}
-  throwingSpear: {fileID: 5966115039116875623, guid: f665d49c32b29354abc41c6188baf90a, type: 3}
-  player1: {fileID: 2156701132975561266}
-  player2: {fileID: 2156701132975561266}
+  throwingHammer: {fileID: 9219956570697772391, guid: e099e324bad07094fb3892f9a8ff0209, type: 3}
+  throwingAxe: {fileID: 2267132337140718749, guid: da805be06e38afe468c6979ac31e2d3b, type: 3}
+  throwingSpear: {fileID: 1662263792437842871, guid: baf5af23a78cb4a48a5c80dd787a0909, type: 3}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  P1A: {fileID: 0}
+  P1B: {fileID: 0}
+  P1C: {fileID: 0}
+  P1D: {fileID: 0}
+  P1E: {fileID: 0}
+  P1F: {fileID: 0}
+  P2A: {fileID: 0}
+  P2B: {fileID: 0}
+  P2C: {fileID: 0}
+  P2D: {fileID: 0}
+  P2E: {fileID: 0}
+  P2F: {fileID: 0}
 --- !u!95 &45453455978484174
 Animator:
   serializedVersion: 5
@@ -231,7 +244,7 @@ GameObject:
   - component: {fileID: 350562218919674590}
   m_Layer: 6
   m_Name: Axe
-  m_TagString: Weapon
+  m_TagString: Weapon1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -416,7 +429,7 @@ GameObject:
   - component: {fileID: 134170358027301951}
   m_Layer: 6
   m_Name: Spear
-  m_TagString: Weapon
+  m_TagString: Weapon1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -602,7 +615,7 @@ GameObject:
   - component: {fileID: 6921647943390729141}
   m_Layer: 6
   m_Name: GroundCheck
-  m_TagString: Player
+  m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -732,7 +745,7 @@ GameObject:
   - component: {fileID: 4744199280187659294}
   m_Layer: 6
   m_Name: Hammer
-  m_TagString: Weapon
+  m_TagString: Weapon1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
