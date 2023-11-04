@@ -10,6 +10,9 @@ TagManager:
   - Weapon
   - Weapon1
   - Weapon2
+  - Hammer
+  - Axe
+  - Spear
   layers:
   - Default
   - TransparentFX

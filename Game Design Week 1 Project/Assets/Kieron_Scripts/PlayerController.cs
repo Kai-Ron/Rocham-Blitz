@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     Vector2 move;
     private GameObject projectilePrefab;
     public Transform throwPosition;
-    public float maxHP = 30.0f, currentHP, damage = 1.0f, speed = 3.0f, jumpForce = 3.0f, cooldown = 1.0f, invincibility = 0.0f;
+    public float maxHP = 30.0f, currentHP, damage = 1.0f, speed = 3.0f, jumpForce = 3.0f, cooldown = 1.0f, invincibility = 0.0f, knockBack = 100.0f;
     private float timeLeft, xDir;
     private int ammo;
     public string weapon;
     public bool battle = false;
-    private bool grounded = true, facingForward = true;
+    private bool grounded = true;
+    public bool facingForward = true;
+    private bool knockedBack = false;
     public int player;
     public bool firstPlayer = false, secondPlayer = false;
     private float horizontal, vertical, attack, throws;
@@ -93,24 +95,26 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if(battle)
         {
-            Move(xDir);
-
-            if (vertical == 1)
+            if (!knockedBack)
             {
-                Jump();
-            }
+                Move(xDir);
 
-            if (attack == 1)
-            {
-                Attack();
-            }
+                if (vertical == 1)
+                {
+                    Jump();
+                }
 
-            if (throws  == 1)
-            {
-                Throw();
+                if (attack == 1)
+                {
+                    Attack();
+                }
+
+                if (throws  == 1)
+                {
+                    Throw();
+                }
             }
         }
         else
@@ -127,6 +131,7 @@ public class PlayerController : MonoBehaviour
             if (horizontal == -1)
             {
                 weapon = "Hammer";
+                projectilePrefab = throwingHammer;
                 P1A.IDCheck(1);
                 P1B.IDCheck(1);
                 P1C.IDCheck(1);
@@ -138,6 +143,7 @@ public class PlayerController : MonoBehaviour
             else if (horizontal == 1)
             {
                 weapon = "Spear";
+                projectilePrefab = throwingSpear;
                 P1A.IDCheck(3);
                 P1B.IDCheck(3);
                 P1C.IDCheck(3);
@@ -148,6 +154,7 @@ public class PlayerController : MonoBehaviour
             else if (vertical == 1)
             {
                 weapon = "Axe";
+                projectilePrefab = throwingAxe;
                 P1A.IDCheck(2);
                 P1B.IDCheck(2);
                 P1C.IDCheck(2);
@@ -158,7 +165,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-
+                projectilePrefab = null;
                 P1A.IDCheck(0);
                 P1B.IDCheck(0);
                 P1C.IDCheck(0);
@@ -174,6 +181,7 @@ public class PlayerController : MonoBehaviour
             if (horizontal == -1)
             {
                 weapon = "Hammer";
+                projectilePrefab = throwingHammer;
                 P2A.IDCheck(1);
                 P2B.IDCheck(1);
                 P2C.IDCheck(1);
@@ -185,6 +193,7 @@ public class PlayerController : MonoBehaviour
             else if (horizontal == 1)
             {
                 weapon = "Spear";
+                projectilePrefab = throwingSpear;
                 P2A.IDCheck(3);
                 P2B.IDCheck(3);
                 P2C.IDCheck(3);
@@ -195,6 +204,7 @@ public class PlayerController : MonoBehaviour
             else if (vertical == 1)
             {
                 weapon = "Axe";
+                projectilePrefab = throwingAxe;
                 P2A.IDCheck(2);
                 P2B.IDCheck(2);
                 P2C.IDCheck(2);
@@ -205,7 +215,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-
+                projectilePrefab = null;
                 P2A.IDCheck(0);
                 P2B.IDCheck(0);
                 P2C.IDCheck(0);
@@ -228,6 +238,7 @@ public class PlayerController : MonoBehaviour
             facingForward = !facingForward;
             Vector3 playerScale = transform.localScale;
             playerScale.x *= -1;
+            knockBack *= -1;
             transform.localScale = playerScale;
         }
     }
@@ -282,12 +293,12 @@ public class PlayerController : MonoBehaviour
     {
         if (ammo > 0 && projectilePrefab != null)
         {
-            /*if (cooldown <= 0)
+            if (cooldown <= 0)
             {
                 var newPrefab = Instantiate(projectilePrefab, throwPosition.position, transform.rotation);
                 ammo --;
                 cooldown = 1.0f;
-            }*/
+            }
         }
     }
 
@@ -309,7 +320,7 @@ public class PlayerController : MonoBehaviour
         ammo = 3;
     }
 
-    public void TakeDamage(float damageTaken)
+    public void TakeDamage(float damageTaken, float knockBackTaken)
     {
         
             if (invincibility <= 0)
@@ -326,6 +337,12 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log("Player " + player + " Takes Damage");
                     invincibility = 1.0f;
+
+                    rb.velocity = new Vector2(rb.velocity.x + knockBackTaken, rb.velocity.y + 10);
+
+                    //rb.AddForce(transform.up * 10, ForceMode2D.Impulse);
+                    //rb.AddForce(transform.right * knockBackTaken, ForceMode2D.Impulse);
+
                     StartCoroutine(Invincible());
                 }
             }
@@ -333,11 +350,16 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Invincible()
     {
+        //rb.velocity = new Vector2(rb.velocity.x + knockBack, rb.velocity.y + 5);
+
+        knockedBack = true;
+
         animator.SetTrigger("Damaged");
 
         yield return new WaitForSeconds(invincibility);
 
         invincibility = 0.0f;
+        knockedBack = false;
         Debug.Log("Player " + player + " is no longer invincible");
 
     }
@@ -346,11 +368,11 @@ public class PlayerController : MonoBehaviour
     {
             if((collision.gameObject.tag == "Weapon1") && (!firstPlayer))
             {
-                player2.GetComponent<PlayerController>().TakeDamage(damage);
+                TakeDamage(player1.GetComponent<PlayerController>().damage, player1.GetComponent<PlayerController>().knockBack);
             }
             else if((collision.gameObject.tag == "Weapon2") && (!secondPlayer))
             {
-                player1.GetComponent<PlayerController>().TakeDamage(damage);
+                TakeDamage(player2.GetComponent<PlayerController>().damage, player2.GetComponent<PlayerController>().knockBack);
             }
 
             if(collision.gameObject.tag == "Hammer")
@@ -386,6 +408,29 @@ public class PlayerController : MonoBehaviour
         {
             grounded = false;
         }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+            if(collision.gameObject.tag == "Hammer")
+            {
+                projectilePrefab = throwingHammer;
+                ammo = 3;
+                Destroy(collision.gameObject);
+            }
+
+            if(collision.gameObject.tag == "Axe")
+            {
+                projectilePrefab = throwingAxe;
+                ammo = 3;
+                Destroy(collision.gameObject);
+            }
+
+            if(collision.gameObject.tag == "Spear")
+            {
+                projectilePrefab = throwingSpear;
+                ammo = 3;
+                Destroy(collision.gameObject);
+            }
     }
 }
